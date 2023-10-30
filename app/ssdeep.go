@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/glaslos/ssdeep"
+	"github.com/rzte/ssdeep"
 )
 
 var (
