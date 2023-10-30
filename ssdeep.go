@@ -25,7 +25,6 @@ const (
 	rollingWindow     = 7
 	blockMin          = 3
 	spamSumLength     = 64
-	minFileSize       = 4096
 	hashPrime         = 0x93
 	hashInit          = 0x27
 	b64String         = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
@@ -37,7 +36,8 @@ const (
 var (
 	b64 = []byte(b64String)
 	// Force calculates the hash on invalid input
-	Force = false
+	Force       = false
+	MinFileSize = uint64(4096)
 )
 
 type rollingState struct {
@@ -181,7 +181,7 @@ func FuzzyReader(f io.Reader) (string, error) {
 }
 
 func (state *ssdeepState) digest() (string, error) {
-	if !Force && state.totalSize <= minFileSize {
+	if !Force && state.totalSize <= MinFileSize {
 		return "", ErrFileTooSmall
 	}
 	if state.totalSize > maxTotalSize {
